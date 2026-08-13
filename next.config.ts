@@ -5,5 +5,9 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   reactStrictMode: true,
 };
-
+module.exports = {
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "cdn.dummyjson.com, images/unsplash.com" }],
+  },
+};
 export default nextConfig;

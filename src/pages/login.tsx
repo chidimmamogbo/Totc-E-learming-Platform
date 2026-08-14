@@ -14,7 +14,7 @@ const Login = (): React.JSX.Element => {
   const [errors, setErrors] = useState<{ [key in keyof LoginInput]?: string }>({});
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const handleLoginSubmit = (e: React.SyntheticEvent) => {
+  const handleLoginSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
 
     if (isSuccess) {

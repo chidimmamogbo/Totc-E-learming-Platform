@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const ClassroomFeatures = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full">
+    <section className="bg-white py-16 px-6 sm:px-12 md:px-16 lg:px-34 w-full">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         
         {/* Left Content Column */}

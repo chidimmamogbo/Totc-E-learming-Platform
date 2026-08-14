@@ -16,7 +16,7 @@ const Navbar = () => {
   const router = useRouter();
   return (
     <div className="flex items-center justify-between sticky top-0 z-50">
-      <div className="navbar bg-[#49BBBD] px-4 lg:px-32">
+      <div className="navbar bg-[#49BBBD] px-4 lg:px-32 md:px-16">
         <div className="navbar-start">
           <Link href="/">
             <Image src="/images/logo.png" alt="Logo" width={60} height={20} className="w-auto h-auto" />

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const WhatIsTotc = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full">
+    <section className="bg-white py-16 px-6 sm:px-12 md:px-18 lg:px-34 w-full">
       {/* Top Header Section */}
       <div className="max-w-4xl mx-auto text-center mb-14 flex flex-col gap-6">
         <h2 className="text-[#2F327D] font-bold text-3xl sm:text-4xl tracking-tight">

@@ -27,7 +27,7 @@ const featureList: FeatureListItem[] = [
 
 const ClassroomInterfaceFeature = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full overflow-hidden">
+    <section className="bg-white py-16 px-6 sm:px-12 md:px-16 lg:px-32 w-full overflow-hidden">
       {/* Top Header Labels */}
       <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-24 flex flex-col gap-4">
         <h2 className="text-[#2F327D] font-bold text-2xl sm:text-3xl lg:text-[36px] tracking-tight capitalize">

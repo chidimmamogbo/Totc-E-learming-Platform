@@ -18,7 +18,7 @@ const successMetrics: MetricItem[] = [
 
 const SuccessSection = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full text-center">
+    <section className="bg-white py-16 px-6 sm:px-12 lg:px-30 md:px-12 w-full text-center">
       {/* Header Container */}
       <div className="max-w-2xl mx-auto mb-16 flex flex-col gap-4">
         <h2 className="text-[#252641] font-bold text-3xl sm:text-4xl tracking-tight">

@@ -1,54 +1,62 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { registerSchema, RegisterInput } from '@/utils/authSchema'; // Ensure this matches your path inside src/utils/
+import { useRouter } from 'next/router';
+import { registerSchema, RegisterInput } from '@/utils/authSchema';
 
 const Register = (): React.JSX.Element => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // Local state to hold field-specific error messages matching RegisterInput keys
   const [errors, setErrors] = useState<{ [key in keyof RegisterInput]?: string }>({});
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const handleRegisterSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setErrors({}); // Clear previous errors on every submission
 
-    // Execute Zod safe parsing check
+    if (isSuccess) {
+      router.push('/');
+      return;
+    }
+
+    setErrors({});
+
     const validationResult = registerSchema.safeParse({ email, username, password });
 
     if (!validationResult.success) {
       const fieldErrors: { [key in keyof RegisterInput]?: string } = {};
       
-      // Fixed: Iterating correctly through Zod's official .issues array
       validationResult.error.issues.forEach((issue) => {
+        // FIXED: Extract the first item from the path array to safely match key types
         const fieldName = issue.path[0] as keyof RegisterInput;
         if (fieldName) {
           fieldErrors[fieldName] = issue.message;
         }
       });
 
-      setErrors(fieldErrors); // Mount errors onto state to display them in the UI
-      return; // Stop form submission
+      setErrors(fieldErrors);
+      return;
     }
 
-    // Success State - Proceed with safe API database registration call
-    console.log("Registration Validation Successful!", validationResult.data);
+    setIsSuccess(true);
+    setEmail('');
+    setUsername('');
+    setPassword('');
+    router.push('/');
   };
 
   return (
-    <main className="min-h-screen w-full bg-white flex items-center justify-center p-4 sm:p-8 md:p-12 py-20 lg:py-28">
+    <main className="min-h-screen w-full bg-white flex items-center justify-center p-4 sm:p-8 md:p-12 py-20 lg:py-28 lg:px-34">
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
-        {/* ========================================================================= */}
         {/* LEFT COLUMN: VISUAL BRAND ACCENT CONTAINER */}
-        {/* ========================================================================= */}
         <div className="relative w-full aspect-[4/5] lg:h-[680px] xl:h-[740px] rounded-[30px] overflow-hidden shadow-sm">
           <Image
             src="/images/register.png"
-            alt="Young children raising hands happily sitting in a warm classroom setting"
+            alt="Young children raising hands happily sitting in classroom setting"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 550px"
@@ -65,15 +73,12 @@ const Register = (): React.JSX.Element => {
           </div>
         </div>
 
-        {/* ========================================================================= */}
         {/* RIGHT COLUMN: REPLICA REGISTRATION FORM INTERFACE */}
-        {/* ========================================================================= */}
         <div className="flex flex-col w-full max-w-md mx-auto lg:mx-0">
           <p className="text-[#2F327D] font-normal text-sm sm:text-base text-center mb-5 tracking-wide">
             Welcome to lorem..!
           </p>
 
-          {/* Toggle Tab Bar */}
           <div className="w-full bg-[#49BBBD]/30 rounded-full p-1.5 flex items-center mb-10 shadow-inner">
             <Link href="/login" className="w-1/2 text-white font-medium text-sm sm:text-base text-center py-2.5 rounded-full hover:text-[#2F327D] transition-colors">
               Login
@@ -87,15 +92,24 @@ const Register = (): React.JSX.Element => {
             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </p>
 
-          <form onSubmit={handleRegisterSubmit} className="flex flex-col gap-6 w-full">
+          <form onSubmit={handleRegisterSubmit} autoComplete="on" className="flex flex-col gap-6 w-full">
             
+            {isSuccess && (
+              <div className="w-full bg-[#00CBB8]/10 border border-[#00CBB8] text-[#00CBB8] rounded-2xl py-3.5 px-6 text-sm font-medium text-center transition-all duration-300">
+                🎉 Registration Successful! Redirecting...
+              </div>
+            )}
+
             {/* Field 1: Email Address Input */}
             <div className="flex flex-col gap-2">
-              <label className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
+              <label htmlFor="register-email" className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
                 Email Address
               </label>
               <input
+                id="register-email"
                 type="text"
+                name="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your Email Address"
@@ -110,11 +124,14 @@ const Register = (): React.JSX.Element => {
 
             {/* Field 2: User Name Input */}
             <div className="flex flex-col gap-2">
-              <label className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
+              <label htmlFor="register-username" className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
                 User name
               </label>
               <input
+                id="register-username"
                 type="text"
+                name="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter your User name"
@@ -129,12 +146,15 @@ const Register = (): React.JSX.Element => {
 
             {/* Field 3: Password Input with Eye Visibility Toggler */}
             <div className="flex flex-col gap-2">
-              <label className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
+              <label htmlFor="register-password" className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
                 Password
               </label>
               <div className="relative w-full">
                 <input
+                  id="register-password"
                   type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your Password"
@@ -168,9 +188,11 @@ const Register = (): React.JSX.Element => {
             <div className="w-full flex justify-end mt-6">
               <button
                 type="submit"
-                className="w-full sm:w-[160px] bg-[#49BBBD] hover:bg-[#3ca1a3] text-white font-medium text-sm sm:text-base py-3 rounded-full shadow-md transition-all active:scale-98"
+                className={`w-full sm:w-auto font-medium text-sm sm:text-base py-3 rounded-full shadow-md transition-all active:scale-98 ${
+                  isSuccess ? 'bg-[#00CBB8] text-white px-8' : 'bg-[#49BBBD] hover:bg-[#3ca1a3] text-white px-10'
+                }`}
               >
-                Register
+                {isSuccess ? 'Redirecting... →' : 'Register'}
               </button>
             </div>
 

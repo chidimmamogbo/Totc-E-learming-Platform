@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const DiscussionShowcase = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full overflow-hidden flex flex-col items-center">
+    <section className="bg-white py-16 px-6 sm:px-12 md:px-16 lg:px-30 w-full overflow-hidden flex flex-col items-center">
       {/* Main Two-Column Content Grid */}
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16">
         

@@ -4,7 +4,7 @@ import { FaPlay } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <div className="w-full bg-[#49BBBD] min-h-170 md:min-h-150 lg:min-h-175 flex flex-col md:flex-row items-center justify-between px-6 sm:px-12 lg:px-24 py-12 md:py-0 relative overflow-hidden [clip-path:ellipse(125%_100%_at_50%_0%)] md:[clip-path:ellipse(120%_100%_at_50%_0%)]">
+    <div className="w-full bg-[#49BBBD] min-h-170 md:min-h-150 lg:min-h-175 flex flex-col md:flex-row items-center justify-between px-6 sm:px-12 lg:px-34 md:px-16 py-12 md:py-0 relative overflow-hidden [clip-path:ellipse(125%_100%_at_50%_0%)] md:[clip-path:ellipse(120%_100%_at_50%_0%)]">
 
       {/* 1. Left Text Column: Standardizes width across dynamic responsive resizing panels */}
       <div className="w-full md:w-[45%] text-white flex flex-col justify-center text-center md:text-left gap-6 z-10 mb-10 md:mb-0">

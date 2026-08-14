@@ -1,51 +1,57 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { loginSchema, LoginInput } from '@/utils/authSchema'; // Ensure this matches your path inside src/utils/
+import { useRouter } from 'next/router';
+import { loginSchema, LoginInput } from '@/utils/authSchema';
 
 const Login = (): React.JSX.Element => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  // Local state to hold field-specific error messages
   const [errors, setErrors] = useState<{ [key in keyof LoginInput]?: string }>({});
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const handleLoginSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setErrors({}); // Clear previous errors on every submission
 
-    // Execute Zod safe parsing check
+    if (isSuccess) {
+      router.push('/');
+      return;
+    }
+
+    setErrors({});
+
     const validationResult = loginSchema.safeParse({ username, password });
 
     if (!validationResult.success) {
       const fieldErrors: { [key in keyof LoginInput]?: string } = {};
       
-      // Fixed: Iterating correctly through Zod's official .issues array
       validationResult.error.issues.forEach((issue) => {
-        // Zod paths are arrays of keys (e.g. ['username']), we extract the first index
+        // FIXED: Extract the first item from the path array to safely match key types
         const fieldName = issue.path[0] as keyof LoginInput;
         if (fieldName) {
           fieldErrors[fieldName] = issue.message;
         }
       });
 
-      setErrors(fieldErrors); // Mount errors onto state to display them in the UI
-      return; // Stop form submission
+      setErrors(fieldErrors);
+      return;
     }
 
-    // Success state - Proceed with your safe API database call
-    console.log("Validation Successful!", validationResult.data);
+    setIsSuccess(true);
+    setUsername('');
+    setPassword('');
+    router.push('/');
   };
 
   return (
-    <main className="min-h-screen w-full bg-white flex items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16">
+    <main className="min-h-screen w-full bg-white flex items-center justify-center p-4 sm:p-8 md:p-16 lg:py-28 lg:px-34">
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
-        {/* ========================================================================= */}
         {/* LEFT COLUMN: VISUAL BRAND ACCENT CONTAINER */}
-        {/* ========================================================================= */}
         <div className="relative w-full aspect-[4/5] lg:h-[620px] xl:h-[680px] rounded-[30px] overflow-hidden shadow-sm">
           <Image
             src="/images/login.png"
@@ -66,15 +72,12 @@ const Login = (): React.JSX.Element => {
           </div>
         </div>
 
-        {/* ========================================================================= */}
         {/* RIGHT COLUMN: LOGIN AUTH FORM INTERFACE */}
-        {/* ========================================================================= */}
         <div className="flex flex-col w-full max-w-md mx-auto lg:mx-0">
           <p className="text-[#2F327D] font-normal text-sm sm:text-base text-center mb-5 tracking-wide">
             Welcome to lorem..!
           </p>
 
-          {/* Toggle Tab Bar */}
           <div className="w-full bg-[#49BBBD]/30 rounded-full p-1.5 flex items-center mb-10 shadow-inner">
             <Link href="/login" className="w-1/2 bg-[#49BBBD] text-white font-medium text-sm sm:text-base text-center py-2.5 rounded-full transition-all shadow-md">
               Login
@@ -88,15 +91,24 @@ const Login = (): React.JSX.Element => {
             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </p>
 
-          <form onSubmit={handleLoginSubmit} className="flex flex-col gap-6 w-full">
+          <form onSubmit={handleLoginSubmit} autoComplete="on" className="flex flex-col gap-6 w-full">
             
+            {isSuccess && (
+              <div className="w-full bg-[#00CBB8]/10 border border-[#00CBB8] text-[#00CBB8] rounded-2xl py-3.5 px-6 text-sm font-medium text-center transition-all duration-300">
+                🎉 Login Successful! Redirecting...
+              </div>
+            )}
+
             {/* User Name Input Group */}
             <div className="flex flex-col gap-2">
-              <label className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
+              <label htmlFor="login-username" className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
                 User name
               </label>
               <input
+                id="login-username"
                 type="text"
+                name="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter your User name"
@@ -104,7 +116,6 @@ const Login = (): React.JSX.Element => {
                   errors.username ? 'border-red-500 focus:border-red-500' : 'border-[#49BBBD]/60 focus:border-[#49BBBD]'
                 }`}
               />
-              {/* Error indicator */}
               {errors.username && (
                 <span className="text-red-500 text-xs pl-4 font-medium">{errors.username}</span>
               )}
@@ -112,12 +123,15 @@ const Login = (): React.JSX.Element => {
 
             {/* Password Input Group */}
             <div className="flex flex-col gap-2">
-              <label className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
+              <label htmlFor="login-password" className="text-[#2F327D] font-semibold text-xs sm:text-sm tracking-wide">
                 Password
               </label>
               <div className="relative w-full">
                 <input
+                  id="login-password"
                   type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your Password"
@@ -142,7 +156,6 @@ const Login = (): React.JSX.Element => {
                   )}
                 </button>
               </div>
-              {/* Error indicator */}
               {errors.password && (
                 <span className="text-red-500 text-xs pl-4 font-medium">{errors.password}</span>
               )}
@@ -168,9 +181,11 @@ const Login = (): React.JSX.Element => {
             <div className="w-full flex justify-end mt-4">
               <button
                 type="submit"
-                className="w-full sm:w-[160px] bg-[#49BBBD] hover:bg-[#3ca1a3] text-white font-medium text-sm sm:text-base py-3 rounded-full shadow-md transition-all active:scale-98"
+                className={`w-full sm:w-auto font-medium text-sm sm:text-base py-3 rounded-full shadow-md transition-all active:scale-98 ${
+                  isSuccess ? 'bg-[#00CBB8] text-white px-8' : 'bg-[#49BBBD] hover:bg-[#3ca1a3] text-white px-10'
+                }`}
               >
-                Login
+                {isSuccess ? 'Redirecting... →' : 'Login'}
               </button>
             </div>
 

@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 const ManagementShowcase = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="bg-white py-16 px-6 sm:px-12 md:px-16 lg:px-34 w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
         
         {/* Left Content Column */}
         <div className="flex flex-col gap-5 text-center lg:text-left max-w-xl mx-auto lg:mx-0 order-2 lg:order-1">

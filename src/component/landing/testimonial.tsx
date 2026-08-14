@@ -42,12 +42,12 @@ const Testimonials = (): React.JSX.Element => {
   };
 
   return (
-    <section className="bg-white py-24 pb-36 px-6 sm:px-12 md:px-24 w-full overflow-hidden">
+    <section className="bg-white py-24 pb-36 px-8 sm:px-12 md:px-16 lg:px-34 w-full overflow-hidden">
       {/* 
         GRID FIX: Adjusted from [1.1fr_0.9fr] to [0.9fr_1.1fr].
         This narrows the left typography section and widens the image side, matching the mockup perfectly.
       */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16 items-center">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16 items-center">
         
         {/* Left Column: Typography Headers & Assessment Inputs */}
         <div className="flex flex-col gap-6 text-center lg:text-left items-center lg:items-start max-w-xl mx-auto lg:mx-0 w-full">
@@ -117,7 +117,7 @@ const Testimonials = (): React.JSX.Element => {
 
             {/* --- RE-POSITIONED TESTIMONIAL CARDS STACK --- */}
             {/* Perfectly aligned with the absolute card edges from the reference image */}
-            <div className="absolute -bottom-20 -right-10 w-[92%] sm:w-[86%] h-[220px] z-20">
+            <div className="absolute -bottom-20 right-0 md:-right-10 w-[92%] sm:w-[86%] h-[220px] z-20">
               {testimonialsList.map((slide, index) => (
                 <div 
                   key={slide.id}

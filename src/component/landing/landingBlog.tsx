@@ -6,7 +6,7 @@ import { mainFeaturedPost, sideBlogList } from '@/component/blogs/blogData';
 
 const LandingBlog = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-20 px-6 sm:px-12 md:px-24 w-full overflow-hidden">
+    <section className="bg-white py-20 px-6 sm:px-12 md:px-16 lg:px-34 w-full overflow-hidden">
       {/* Section Header */}
       <div className="max-w-6xl mx-auto text-center mb-16 flex flex-col gap-4">
         <h2 className="text-[#2F327D] font-bold text-3xl sm:text-4xl tracking-tight">

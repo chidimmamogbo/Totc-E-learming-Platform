@@ -37,7 +37,7 @@ const featuresData: FeatureCard[] = [
 
 const FeaturesSection = (): React.JSX.Element => {
   return (
-    <section className="bg-white py-16 px-6 sm:px-12 md:px-24 w-full">
+    <section className="bg-white py-16 px-6 sm:px-12 md:px-17 lg:px-32 w-full">
       {/* Header text container matches image text sizing and margins */}
       <div className="max-w-3xl mx-auto text-center mb-24 flex flex-col gap-5">
         <h2 className="text-[#252641] font-bold text-2xl sm:text-3xl lg:text-[36px] tracking-tight">

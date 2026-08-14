@@ -94,7 +94,7 @@ const Testimonials = (): React.JSX.Element => {
             {/* Main Picture Component */}
             <div className="absolute top-0 left-0 w-[90%] h-[90%] rounded-[24px] overflow-hidden">
               <Image
-                src="/images/testimonial.png"
+                src="/images/Testimonial.png"
                 alt="Happy student holding class files"
                 fill
                 priority

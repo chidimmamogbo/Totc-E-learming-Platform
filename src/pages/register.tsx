@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { registerSchema, RegisterInput } from '@/utils/authSchema';
 
-const Register = (): React.JSX.Element => {
+const Register: React.FC = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
@@ -53,7 +53,7 @@ const Register = (): React.JSX.Element => {
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
         {/* LEFT COLUMN: VISUAL BRAND ACCENT CONTAINER */}
-        <div className="relative w-full aspect-[4/5] lg:h-[680px] xl:h-[740px] rounded-[30px] overflow-hidden shadow-sm">
+        <div className="hidden md:flex relative w-full aspect-[4/5] lg:h-[680px] xl:h-[740px] rounded-[30px] overflow-hidden shadow-sm">
           <Image
             src="/images/register.png"
             alt="Young children raising hands happily sitting in classroom setting"

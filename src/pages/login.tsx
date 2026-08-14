@@ -52,7 +52,7 @@ const Login = (): React.JSX.Element => {
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
         {/* LEFT COLUMN: VISUAL BRAND ACCENT CONTAINER */}
-        <div className="relative w-full aspect-[4/5] lg:h-[620px] xl:h-[680px] rounded-[30px] overflow-hidden shadow-sm">
+        <div className="hidden md:flex relative w-full aspect-[4/5] lg:h-[620px] xl:h-[680px] rounded-[30px] overflow-hidden shadow-sm">
           <Image
             src="/images/login.png"
             alt="Students raised hands interacting in classroom"
